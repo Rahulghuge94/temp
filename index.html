@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="theme-color" content="#000000">
+    <meta name="name" content="PyScript/Panel Streaming Demo">
+
+    <title>PyScript/Panel Streaming Demo</title>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
+	<script src="https://unpkg.com/lightweight-charts/dist/lightweight-charts.standalone.production.js"></script>
+    <link rel="stylesheet" href="https://pyscript.net/latest/pyscript.css" />
+    <script defer src="https://pyscript.net/latest/pyscript.js"></script>
+  </head>
+
+  <py-env>
+    - numpy
+    - pandas
+    - apischema
+    - jinja2
+    - absl-py
+    - './pytvlwcharts-0.0.1-py2.py3-none-any.whl'
+  </py-env>
+
+  <body>
+    <div>
+	<py-repl id="my-repl" auto-generate=true> </py-repl>
+	<div id="_e">
+	<script>
+	 var chart = LightweightCharts.createChart(document.getElementById("_e"), { width: 400, height: 300 });
+	 var chart_series = chart.addCandlestickSeries(
+            {}
+          );
+          chart_series.setData(
+            [{"time":"2022-07-01T03:45:00.000Z","open":33400.0,"high":33877.35,"low":33309.1,"close":33859.6},
+            {"time":"2022-07-04T03:45:00.000Z","open":33748.1,"high":34189.2,"low":33748.1,"close":33785.25},
+            {"time":"2022-07-05T03:45:00.000Z","open":34319.0,"high":34520.25,"low":33901.95,"close":34139.75},
+            {"time":"2022-07-06T03:45:00.000Z","open":33934.5,"high":34550.0,"low":33934.45,"close":33959.3},
+            {"time":"2022-07-07T03:45:00.000Z","open":34812.2,"high":35150.0,"low":34760.0,"close":34507.15},
+            {"time":"2022-07-08T03:45:00.000Z","open":35355.0,"high":35426.9,"low":35151.95,"close":35112.4},
+            {"time":"2022-07-11T03:45:00.000Z","open":35226.2,"high":35716.15,"low":35172.1,"close":35299.85},
+            {"time":"2022-07-12T03:45:00.000Z","open":35421.0,"high":35580.0,"low":35230.0,"close":35614.05},
+            {"time":"2022-07-13T03:45:00.000Z","open":35299.0,"high":35484.45,"low":34970.0,"close":35290.15},
+            {"time":"2022-07-14T03:45:00.000Z","open":35035.1,"high":35212.3,"low":34767.6,"close":35060.05},
+            {"time":"2022-07-15T03:45:00.000Z","open":34932.0,"high":35066.55,"low":34685.0,"close":34854.9},
+            {"time":"2022-07-18T03:45:00.000Z","open":35050.0,"high":35596.65,"low":35025.0,"close":34906.15},
+            {"time":"2022-07-19T03:45:00.000Z","open":35394.0,"high":35918.0,"low":35366.35,"close":35564.3},
+            {"time":"2022-07-20T03:45:00.000Z","open":36207.9,"high":36364.05,"low":36045.0,"close":35865.55},
+            {"time":"2022-07-21T03:45:00.000Z","open":36105.0,"high":36466.25,"low":36032.2,"close":36088.1},
+            {"time":"2022-07-22T03:45:00.000Z","open":36459.9,"high":36932.75,"low":36402.1,"close":36333.1},
+            {"time":"2022-07-25T03:45:00.000Z","open":36829.55,"high":37081.95,"low":36575.7,"close":36838.2},
+            {"time":"2022-07-26T03:45:00.000Z","open":36799.95,"high":36799.95,"low":36455.0,"close":36819.4},
+            {"time":"2022-07-27T03:45:00.000Z","open":36453.2,"high":36941.9,"low":36390.0,"close":36500.8},
+            {"time":"2022-07-28T03:45:00.000Z","open":37214.75,"high":37555.0,"low":37192.45,"close":36914.85},
+            {"time":"2022-07-29T03:45:00.000Z","open":37847.65,"high":37898.95,"low":37413.0,"close":37529.8},
+            {"time":"2022-08-01T03:45:00.000Z","open":37770.9,"high":38130.25,"low":37615.0,"close":37711.45},
+            {"time":"2022-08-02T03:45:00.000Z","open":37944.85,"high":38379.95,"low":37825.35,"close":38094.15},
+            {"time":"2022-08-03T03:45:00.000Z","open":38095.25,"high":38277.95,"low":37902.3,"close":38160.5},
+            {"time":"2022-08-04T03:45:00.000Z","open":38326.65,"high":38407.95,"low":37461.2,"close":38177.0},
+            {"time":"2022-08-05T03:45:00.000Z","open":38000.15,"high":38332.0,"low":37969.0,"close":37929.0},
+            {"time":"2022-08-08T03:45:00.000Z","open":38108.0,"high":38511.05,"low":37914.0,"close":38108.05},
+            {"time":"2022-08-10T03:45:00.000Z","open":38501.1,"high":38597.95,"low":38367.0,"close":38445.15},
+            {"time":"2022-08-11T03:45:00.000Z","open":38850.0,"high":39133.4,"low":38849.95,"close":38513.5},
+            {"time":"2022-08-12T03:45:00.000Z","open":39131.55,"high":39270.0,"low":38950.0,"close":39097.75},
+            {"time":"2022-08-16T03:45:00.000Z","open":39411.5,"high":39624.0,"low":39320.6,"close":39240.55},
+            {"time":"2022-08-17T03:45:00.000Z","open":39551.0,"high":39708.65,"low":39421.05,"close":39465.75},
+            {"time":"2022-08-18T03:45:00.000Z","open":39585.9,"high":39948.6,"low":39510.35,"close":39676.3},
+            {"time":"2022-08-19T03:45:00.000Z","open":39941.4,"high":39950.0,"low":39055.55,"close":39875.35},
+            {"time":"2022-08-22T03:45:00.000Z","open":38950.0,"high":38958.5,"low":38459.7,"close":39184.0},
+            {"time":"2022-08-23T03:45:00.000Z","open":38149.9,"high":39100.0,"low":38149.8,"close":38507.3},
+            {"time":"2022-08-24T03:45:00.000Z","open":38975.0,"high":39336.7,"low":38811.5,"close":38957.1},
+            {"time":"2022-08-25T03:45:00.000Z","open":39380.0,"high":39681.15,"low":38949.2,"close":39257.15},
+            {"time":"2022-08-26T03:45:00.000Z","open":39272.0,"high":39525.0,"low":39037.2,"close":39100.65},
+            {"time":"2022-08-29T03:45:00.000Z","open":38315.0,"high":38560.0,"low":38129.0,"close":39221.85},
+            {"time":"2022-08-30T03:45:00.000Z","open":38607.1,"high":39786.65,"low":38606.25,"close":38441.75},
+            {"time":"2022-09-01T03:45:00.000Z","open":39006.0,"high":39828.1,"low":38952.15,"close":39707.6},
+            {"time":"2022-09-02T03:45:00.000Z","open":39519.95,"high":39714.95,"low":39311.3,"close":39466.75}]
+          );
+          chart_series.setMarkers(
+            []
+          );
+	</script
+	</div>
+    </div>
+  </body>
+</html>
