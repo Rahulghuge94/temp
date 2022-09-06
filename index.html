@@ -1,20 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="utf-8">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="default">
-    <meta name="theme-color" content="#000000">
-    <meta name="name" content="PyScript/Panel Streaming Demo">
-
-    <title>PyScript/Panel Streaming Demo</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script type="text/javascript" src="https://rawgit.com/vitmalina/w2ui/master/dist/w2ui.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
-	<script src="https://unpkg.com/lightweight-charts/dist/lightweight-charts.standalone.production.js"></script>
-    <link rel="stylesheet" href="https://pyscript.net/latest/pyscript.css" />
+	  <script src="https://unpkg.com/lightweight-charts/dist/lightweight-charts.standalone.production.js"></script>
     <script defer src="https://pyscript.net/latest/pyscript.js"></script>
-  </head>
+    <link rel="stylesheet" href="https://pyscript.net/latest/pyscript.css" />
+    
+    <link rel="stylesheet" type="text/css" href="https://rawgit.com/vitmalina/w2ui/master/dist/w2ui.min.css" />
+    <title>CHART</title>
 
+    <style>
+        .chart {
+            background-color: #232323;
+        }
+    </style>
+  </head>
   <py-env>
     - numpy
     - pandas
@@ -23,66 +28,76 @@
     - absl-py
     - './pytvlwcharts-0.0.1-py2.py3-none-any.whl'
   </py-env>
-
   <body>
-    <div>
-	<py-repl id="my-repl" auto-generate=true> </py-repl>
-	<div id="_e">
-	<script>
-	 var chart = LightweightCharts.createChart(document.getElementById("_e"), { width: 400, height: 300 });
-	 var chart_series = chart.addCandlestickSeries(
-            {}
-          );
-          chart_series.setData(
-            [{"time":"2022-07-01T03:45:00.000Z","open":33400.0,"high":33877.35,"low":33309.1,"close":33859.6},
-            {"time":"2022-07-04T03:45:00.000Z","open":33748.1,"high":34189.2,"low":33748.1,"close":33785.25},
-            {"time":"2022-07-05T03:45:00.000Z","open":34319.0,"high":34520.25,"low":33901.95,"close":34139.75},
-            {"time":"2022-07-06T03:45:00.000Z","open":33934.5,"high":34550.0,"low":33934.45,"close":33959.3},
-            {"time":"2022-07-07T03:45:00.000Z","open":34812.2,"high":35150.0,"low":34760.0,"close":34507.15},
-            {"time":"2022-07-08T03:45:00.000Z","open":35355.0,"high":35426.9,"low":35151.95,"close":35112.4},
-            {"time":"2022-07-11T03:45:00.000Z","open":35226.2,"high":35716.15,"low":35172.1,"close":35299.85},
-            {"time":"2022-07-12T03:45:00.000Z","open":35421.0,"high":35580.0,"low":35230.0,"close":35614.05},
-            {"time":"2022-07-13T03:45:00.000Z","open":35299.0,"high":35484.45,"low":34970.0,"close":35290.15},
-            {"time":"2022-07-14T03:45:00.000Z","open":35035.1,"high":35212.3,"low":34767.6,"close":35060.05},
-            {"time":"2022-07-15T03:45:00.000Z","open":34932.0,"high":35066.55,"low":34685.0,"close":34854.9},
-            {"time":"2022-07-18T03:45:00.000Z","open":35050.0,"high":35596.65,"low":35025.0,"close":34906.15},
-            {"time":"2022-07-19T03:45:00.000Z","open":35394.0,"high":35918.0,"low":35366.35,"close":35564.3},
-            {"time":"2022-07-20T03:45:00.000Z","open":36207.9,"high":36364.05,"low":36045.0,"close":35865.55},
-            {"time":"2022-07-21T03:45:00.000Z","open":36105.0,"high":36466.25,"low":36032.2,"close":36088.1},
-            {"time":"2022-07-22T03:45:00.000Z","open":36459.9,"high":36932.75,"low":36402.1,"close":36333.1},
-            {"time":"2022-07-25T03:45:00.000Z","open":36829.55,"high":37081.95,"low":36575.7,"close":36838.2},
-            {"time":"2022-07-26T03:45:00.000Z","open":36799.95,"high":36799.95,"low":36455.0,"close":36819.4},
-            {"time":"2022-07-27T03:45:00.000Z","open":36453.2,"high":36941.9,"low":36390.0,"close":36500.8},
-            {"time":"2022-07-28T03:45:00.000Z","open":37214.75,"high":37555.0,"low":37192.45,"close":36914.85},
-            {"time":"2022-07-29T03:45:00.000Z","open":37847.65,"high":37898.95,"low":37413.0,"close":37529.8},
-            {"time":"2022-08-01T03:45:00.000Z","open":37770.9,"high":38130.25,"low":37615.0,"close":37711.45},
-            {"time":"2022-08-02T03:45:00.000Z","open":37944.85,"high":38379.95,"low":37825.35,"close":38094.15},
-            {"time":"2022-08-03T03:45:00.000Z","open":38095.25,"high":38277.95,"low":37902.3,"close":38160.5},
-            {"time":"2022-08-04T03:45:00.000Z","open":38326.65,"high":38407.95,"low":37461.2,"close":38177.0},
-            {"time":"2022-08-05T03:45:00.000Z","open":38000.15,"high":38332.0,"low":37969.0,"close":37929.0},
-            {"time":"2022-08-08T03:45:00.000Z","open":38108.0,"high":38511.05,"low":37914.0,"close":38108.05},
-            {"time":"2022-08-10T03:45:00.000Z","open":38501.1,"high":38597.95,"low":38367.0,"close":38445.15},
-            {"time":"2022-08-11T03:45:00.000Z","open":38850.0,"high":39133.4,"low":38849.95,"close":38513.5},
-            {"time":"2022-08-12T03:45:00.000Z","open":39131.55,"high":39270.0,"low":38950.0,"close":39097.75},
-            {"time":"2022-08-16T03:45:00.000Z","open":39411.5,"high":39624.0,"low":39320.6,"close":39240.55},
-            {"time":"2022-08-17T03:45:00.000Z","open":39551.0,"high":39708.65,"low":39421.05,"close":39465.75},
-            {"time":"2022-08-18T03:45:00.000Z","open":39585.9,"high":39948.6,"low":39510.35,"close":39676.3},
-            {"time":"2022-08-19T03:45:00.000Z","open":39941.4,"high":39950.0,"low":39055.55,"close":39875.35},
-            {"time":"2022-08-22T03:45:00.000Z","open":38950.0,"high":38958.5,"low":38459.7,"close":39184.0},
-            {"time":"2022-08-23T03:45:00.000Z","open":38149.9,"high":39100.0,"low":38149.8,"close":38507.3},
-            {"time":"2022-08-24T03:45:00.000Z","open":38975.0,"high":39336.7,"low":38811.5,"close":38957.1},
-            {"time":"2022-08-25T03:45:00.000Z","open":39380.0,"high":39681.15,"low":38949.2,"close":39257.15},
-            {"time":"2022-08-26T03:45:00.000Z","open":39272.0,"high":39525.0,"low":39037.2,"close":39100.65},
-            {"time":"2022-08-29T03:45:00.000Z","open":38315.0,"high":38560.0,"low":38129.0,"close":39221.85},
-            {"time":"2022-08-30T03:45:00.000Z","open":38607.1,"high":39786.65,"low":38606.25,"close":38441.75},
-            {"time":"2022-09-01T03:45:00.000Z","open":39006.0,"high":39828.1,"low":38952.15,"close":39707.6},
-            {"time":"2022-09-02T03:45:00.000Z","open":39519.95,"high":39714.95,"low":39311.3,"close":39466.75}]
-          );
-          chart_series.setMarkers(
-            []
-          );
-	</script
-	</div>
+    <div class="container" id="layout" style="width: 100%;height: 740px; box-shadow:1px 1px rgb(127, 126, 126);margin-top: 1px;">
+        <script>
+            let pstyle = 'border: 0.5px solid #efefef; padding: 0.5px;';
+            console.log(screen.height)
+            new w2layout({
+                    box: '#layout',
+                    name: 'layout',
+                    padding: 4,
+                    panels: [
+                                { type: 'top', size: 50, resizable: false, style: 'border: 0.5px solid #efefef; padding: 0.5px;overflow:none;', html: '<div style="font-size: large;font-weight: bold;margin:10px;">LIVE CHARTS</div>' },
+                                { type: 'left', size: 300, resizable: true, style: pstyle, html: '<py-repl id="my-repl" auto-generate=true> </py-repl>' },
+                                { type: 'main', style: pstyle, html: '<div class="chart" id="_e" style="width:100%;height:100%"></div>' }
+                            ]
+            });
+            let conf = {
+              width: 1210,
+              height: 685,
+              rightPriceScale: {
+                visible: true,
+                borderColor: 'rgba(197, 203, 206, 1)',
+              },
+              leftPriceScale: {
+                visible: true,
+                borderColor: 'rgba(197, 203, 206, 1)',
+              },
+              layout: {
+                backgroundColor: '#ffffff',
+                textColor: 'rgba(33, 56, 77, 1)',
+              },
+              grid: {
+                horzLines: {
+                  color: '#F0F3FA',
+                },
+                vertLines: {
+                  color: '#F0F3FA',
+                },
+              },
+              crosshair: {
+                mode: LightweightCharts.CrosshairMode.Normal,
+              },
+              timeScale: {
+                borderColor: 'rgba(197, 203, 206, 1)',
+              },
+              handleScroll: {
+                vertTouchDrag: false,
+              },
+            }
+            var chart = LightweightCharts.createChart(document.getElementById("_e"), conf);
+	          var chart_series = chart.addCandlestickSeries({});
+        </script>
+        <script>
+          function clearOutput(event){
+            const ele = event.srcElement;
+            if (ele.className.includes("output")){
+              ele.innerHTML = '';
+            }
+          }
+		      addEventListener("dblclick", clearOutput);
+        </script>
+
+        <py-script>
+          from pyodide import to_js
+          import pyodide, js
+          from js import Object, chart, chart_series
+          from base64 import b16decode
+          code = b'0A66726F6D206A7320696D706F727420584D4C48747470526571756573740A696D706F72742070616E6461732061732070640A66726F6D206461746574696D6520696D706F7274206461746574696D6520617320647464740A696D706F7274206A736F6E0A0A5F75726C203D202268747470733A2F2F616E742E616C696365626C75652E636F6D2F2F6170692F76312F6368617274732F746476220A0A6465662066726F6D5F746F5F74696D657374616D70732866726F6D5F646174652C20746F5F64617465293A200A2020202072657475726E2028696E7428647464742E7374727074696D652866726F6D5F646174652C202725592D256D2D25642025483A254D3A255327292E74696D657374616D702829292C0A202020202020202020202020696E7428647464742E7374727074696D6528746F5F646174652C202725592D256D2D25642025483A254D3A255327292E74696D657374616D70282929290A0A64656620676574646174612865786368616E67652C20746F6B656E2C20737461727474696D652C20656E6474696D652C20696E74657276616C3D31293A0A2020202075726C203D202268747470733A2F2F616E742E616C696365626C75656F6E6C696E652E636F6D2F6170692F76312F6368617274732F7464763F65786368616E67653D22202B207374722865786368616E676529202B202226746F6B656E3D222B2073747228746F6B656E29202B20222663616E646C65747970653D3126737461727474696D653D222B2073747228737461727474696D6529202B2226656E6474696D653D222B2073747228656E6474696D6529202B202226646174615F6475726174696F6E3D22202B2073747228696E74657276616C290A20202020726571203D20584D4C48747470526571756573742E6E657728290A202020207265712E6F70656E2822474554222C2075726C2C2046616C7365290A202020207265712E73656E6428290A20202020726573203D20737472287265712E726573706F6E7365290A20202020726573203D206A736F6E2E6C6F61647328726573290A202020206466203D2070642E446174614672616D65287265735B2264617461225D5B2263616E646C6573225D2C20636F6C756D6E733D5B2274696D65222C20226F70656E222C202268696768222C20226C6F77222C2022636C6F7365222C2022766F6C756D65225D290A2020202064656C2064665B22766F6C756D65225D0A2020202064665B2774696D65275D203D2070642E746F5F6461746574696D652864665B2774696D65275D2C20696E6665725F6461746574696D655F666F726D61743D54727565290A202020202364665B2774696D65275D203D202864662E74696D652E76696577286E702E696E74363429202F2F203130303030303030303029202B2031393830300A2020202072657475726E2064660A'
+          exec(b16decode(code).decode("utf-8"))
+          document.getElementsByClassName("cm-activeLine")[0].innerHTML = '"""\n#create live chart using tradingview lightweightCharts.\nthis wrapper uses the py-script to run the python codes from browser.\n\n\n#use get data to get data historical data of any timeframe.\n\ne.g. getdata(exchange="NFO", token=56272, starttime=1656647100, endtime=1662112800, interval=1)\nstarttime and endtime are timestamp. it returns pandas dataframe.\nwe getting two global from javascript chart and chart_series.\n\nto convert the list of dict to javascript use Object.fromEntries(to_js(python_dict))\ndata = Object.fromEntries(to_js({"a":1,"b":5}))\nset the data to series object..\nchart_series.setData(data)\n\nit will update the chart.\nyou can tweek the chart more ways if you want. read the tradingview lightweight charts document.\n"""'
+        </py-script>
     </div>
   </body>
 </html>
