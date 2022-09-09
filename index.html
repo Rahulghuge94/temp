@@ -3,98 +3,120 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
-	  <script src="https://unpkg.com/lightweight-charts/dist/lightweight-charts.standalone.production.js"></script>
+	<script src="https://unpkg.com/lightweight-charts/dist/lightweight-charts.standalone.production.js"></script>
     <script defer src="https://pyscript.net/latest/pyscript.js"></script>
     <link rel="stylesheet" href="https://pyscript.net/latest/pyscript.css" />
 
     <title>CHART</title>
 
     <style>
-        html, body {
-            height: 90%;
-            margin: 0;
+        body, html{
+            margin: 1px;
         }
-        .code{
-          box-shadow: 5px 5px rgb(114, 114, 114);
+        /* width */
+        ::-webkit-scrollbar {
+            height: 5px;
+            width: 5px;
+        }
+        ::-webkit-scrollbar-track {
+        box-shadow: inset 0 0 5px grey;
+        border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb {
+        background: #44475b;
+        border-radius: 10px;
         }
     </style>
+    <py-env>
+        - numpy
+        - pandas
+        - apischema
+        - jinja2
+        - absl-py
+      </py-env>
   </head>
-  <py-env>
-    - numpy
-    - pandas
-    - apischema
-    - jinja2
-    - absl-py
-  </py-env>
   <body>
-    <div class="container" id="l1" style="position: absolute; width: 100%; float: right; height: 100%; background-color: #fff;">
-      <div class="code" id="l1" style="width:30%; float: left; height: 100%; background-color: #fff; overflow: auto;">
-        <py-repl id="my-repl" auto-generate=true>
-          """
-          This is the demonstration of tradingview Lightweight charting library
-          using the pyscript. technically you can utilise 70% - 80% capability of python in browser.
-          Right now it can't work with requests library, sockets and other library which is dependent
-          C-Python. Using pyscript we can directly interact with javascript. import javaascript
-          object into vice versa. good news is we can use pandas, numpy, matplotlib.
-          besides you can import the package using pip command described in html py-env element.
-          again packages which is not on pypi, we can create .whl add it to your py-env element using path.
-          for more info you can refer. https://github.com/pyscript/pyscript .
-          
-          to make requests use fetch api or XHR. to convert python OBJECT: list[dict] use
-          jsOb = to_js(OBJECT, dict_converter=Object.fromEntries)
-          
-          We can import js which is global window object and manipulate it.
-          
-          In given example i have imported the chart object which created in javascript.
-          other chart object can be created within python itself.
-          here i have created getdata which takes intraday data.
-          
-          getdata(exchange: str, token: int, starttime: str, endtime: str, interval=1)
-          
-          starttime and endtime is in "YYYY-MM-DD HH:MM:SS" format.
-          token is exchange scripcode.
-          
-          """
-        </py-repl>
-        <py-repl id="my-repl" auto-generate=true> 
-          #create candlestick series.
-          chart_series = chart.addCandlestickSeries()
-          
-          #create line series.
-          line_series1 = chart.addLineSeries({"color": 'rgba(35, 150, 77)',"lineWidth": 1,})
-          line_series2 = chart.addLineSeries({"color": 'rgba(5, 68, 203)',"lineWidth": 1,})
-          
-          def plot_dual_series(secCode1: int, secCode2: int, _from: str, _to: str, interval=1):
-              global data, data1
-              data = getdata("NFO", secCode1, _from, _to, interval)
-              data.rename(columns = {'close':'value'}, inplace = True)
-              data.drop(['open', 'high', 'low'], axis=1, inplace = True)
-              _data = con_tv_chart_data(data)
-              line_series1.setData(_data)
-              data1 = getdata("NFO", secCode2, _from, _to, interval)
-              data1.rename(columns = {'close':'value'}, inplace = True)
-              data1.drop(['open', 'high', 'low'], axis=1, inplace = True)
-              _data1 = con_tv_chart_data(data1)
-              line_series2.setData(_data1)
-              
-          def plot_candlestick_series(secCode1: int, _from: str, _to: str, interval=1):
-              global data, data1
-              data = getdata("NFO", secCode1, _from, _to, interval)
-              _data = con_tv_chart_data(data)
-              chart_series.setData(_data)
-              
-          plot_dual_series(71145, 71146, "2022-09-09 09:15:00", "2022-09-09 15:30:00",1)
-          plot_candlestick_series(71146, "2022-09-09 09:15:00", "2022-09-09 15:30:00",1)
-          
-          #to delete series use
-          #chart.removeSeries(chart_series)
-        </py-repl>
-        <py-repl id="my-repl" auto-generate=true> </py-repl>
-      </div>
-      <div class="_chart" id="l1" style="border: 1px solid rgb(82, 48, 114);width:70%; float: right; height: 100%; background-color: #fff;">
-      </div>
+	
+    <div class="container" style="position: absolute; width: 100%;height: 100%; background-color: #fff; box-shadow:1px 1px rgb(127, 126, 126);">
+        <div class="_TPnev" style="position: relative; width: 100%;height: 30px; background-color: #f6f8fa; border: 1px solid #d9d9d9;">
+
+        </div>
+        <div class="r8" style="position: relative; float: right;background-color: #fff; width: 70%;height: 100%; border: 1px solid #d9d9d9;box-shadow:1px 1px #d9d9d9;">
+            <div class="_chart" id="l1" style="width: 100%;height: 100%; background-color: #fff;">
+                
+            </div>
+        </div>
+        <div class="lft" style="position: absolute; float: left;background-color: #f6f8fa; width: 30%;height: 100%; border: 1px solid #d9d9d9;box-shadow:1px 1px #d9d9d9;overflow: auto;">
+            <py-repl id="my-repl" auto-generate=true>
+                """
+                This is the demonstration of tradingview Lightweight charting library
+                using the pyscript. technically you can utilise 70% - 80% capability of python in browser.
+                Right now it can't work with requests library, sockets and other library which is dependent
+                C-Python. Using pyscript we can directly interact with javascript. import javaascript
+                object into vice versa. good news is we can use pandas, numpy, matplotlib.
+                besides you can import the package using pip command described in html py-env element.
+                again packages which is not on pypi, we can create .whl add it to your py-env element using path.
+                for more info you can refer. https://github.com/pyscript/pyscript .
+                
+                to make requests use fetch api or XHR. to convert python OBJECT: list[dict] use
+                jsOb = to_js(OBJECT, dict_converter=Object.fromEntries)
+                
+                We can import js which is global window object and manipulate it.
+                
+                In given example i have imported the chart object which created in javascript.
+                other chart object can be created within python itself.
+                here i have created getdata which takes intraday data.
+                
+                getdata(exchange: str, token: int, starttime: str, endtime: str, interval=1)
+                
+                starttime and endtime is in "YYYY-MM-DD HH:MM:SS" format.
+                token is exchange scripcode.
+                
+                """
+              </py-repl>
+              <py-repl id="my-repl" auto-generate=true> 
+                #create candlestick series.
+                chart_series = chart.addCandlestickSeries()
+                
+                #create line series.
+                line_series1 = chart.addLineSeries({"color": 'rgba(35, 150, 77)',"lineWidth": 1,})
+                line_series2 = chart.addLineSeries({"color": 'rgba(5, 68, 203)',"lineWidth": 1,})
+                
+                def plot_dual_series(secCode1: int, secCode2: int, _from: str, _to: str, interval=1):
+                    global data, data1
+                    data = getdata("NFO", secCode1, _from, _to, interval)
+                    data.rename(columns = {'close':'value'}, inplace = True)
+                    data.drop(['open', 'high', 'low'], axis=1, inplace = True)
+                    _data = con_tv_chart_data(data)
+                    line_series1.setData(_data)
+                    data1 = getdata("NFO", secCode2, _from, _to, interval)
+                    data1.rename(columns = {'close':'value'}, inplace = True)
+                    data1.drop(['open', 'high', 'low'], axis=1, inplace = True)
+                    _data1 = con_tv_chart_data(data1)
+                    line_series2.setData(_data1)
+                    
+                def plot_candlestick_series(secCode1: int, _from: str, _to: str, interval=1):
+                    global data, data1
+                    data = getdata("NFO", secCode1, _from, _to, interval)
+                    _data = con_tv_chart_data(data)
+                    chart_series.setData(_data)
+                    
+                plot_dual_series(71145, 71146, "2022-09-09 09:15:00", "2022-09-09 15:30:00",1)
+                plot_candlestick_series(71146, "2022-09-09 09:15:00", "2022-09-09 15:30:00",1)
+                
+                #to delete series use
+                #chart.removeSeries(chart_series)
+                #to change chart settings apply options
+                #newCONF = {"layout": {
+                    #"backgroundColor": '#ffffff',
+                    #"textColor": 'rgba(83, 86, 77, 1)'}}
+                #chart.applyOptions(to_js(newCONF, dict_converter=Object.fromEntries))
+              </py-repl>
+              <py-repl id="my-repl" auto-generate=true> </py-repl>
+        </div>
     </div>
     <script>
         var chEle = document.getElementsByClassName("_chart")[0];
