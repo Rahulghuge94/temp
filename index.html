@@ -3,20 +3,21 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <script type="text/javascript" src="https://rawgit.com/vitmalina/w2ui/master/dist/w2ui.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
 	  <script src="https://unpkg.com/lightweight-charts/dist/lightweight-charts.standalone.production.js"></script>
     <script defer src="https://pyscript.net/latest/pyscript.js"></script>
     <link rel="stylesheet" href="https://pyscript.net/latest/pyscript.css" />
-    
-    <link rel="stylesheet" type="text/css" href="https://rawgit.com/vitmalina/w2ui/master/dist/w2ui.min.css" />
+
     <title>CHART</title>
 
     <style>
-        .chart {
-            background-color: #232323;
+        html, body {
+            height: 90%;
+            margin: 0;
+        }
+        .code{
+          box-shadow: 5px 5px rgb(114, 114, 114);
         }
     </style>
   </head>
@@ -26,31 +27,83 @@
     - apischema
     - jinja2
     - absl-py
-    - './pytvlwcharts-0.0.1-py2.py3-none-any.whl'
   </py-env>
   <body>
-    <div class="container" id="layout" style="width: 100%;height: 740px; box-shadow:1px 1px rgb(127, 126, 126);margin-top: 1px;">
-        <script>
-            let pstyle = 'border: 0.5px solid #efefef; padding: 0.5px;';
-            console.log(screen.height)
-            new w2layout({
-                    box: '#layout',
-                    name: 'layout',
-                    padding: 4,
-                    panels: [
-                                { type: 'top', size: 50, resizable: false, style: 'border: 0.5px solid #efefef; padding: 0.5px;overflow:none;', html: '<div style="font-size: large;font-weight: bold;margin:10px;">LIVE CHARTS</div>' },
-                                { type: 'left', size: 300, resizable: true, style: pstyle, html: '<py-repl id="my-repl" auto-generate=true> </py-repl>' },
-                                { type: 'main', style: pstyle, html: '<div class="chart" id="_e" style="width:100%;height:100%"></div>' }
-                            ]
-            });
-            let conf = {
-              width: 1210,
-              height: 685,
+    <div class="container" id="l1" style="position: absolute; width: 100%; float: right; height: 100%; background-color: #fff;">
+      <div class="code" id="l1" style="width:30%; float: left; height: 100%; background-color: #fff; overflow: auto;">
+        <py-repl id="my-repl" auto-generate=true>
+          """
+          This is the demonstration of tradingview Lightweight charting library
+          using the pyscript. technically you can utilise 70% - 80% capability of python in browser.
+          Right now it can't work with requests library, sockets and other library which is dependent
+          C-Python. Using pyscript we can directly interact with javascript. import javaascript
+          object into vice versa. good news is we can use pandas, numpy, matplotlib.
+          besides you can import the package using pip command described in html py-env element.
+          again packages which is not on pypi, we can create .whl add it to your py-env element using path.
+          for more info you can refer. https://github.com/pyscript/pyscript .
+          
+          to make requests use fetch api or XHR. to convert python OBJECT: list[dict] use
+          jsOb = to_js(OBJECT, dict_converter=Object.fromEntries)
+          
+          We can import js which is global window object and manipulate it.
+          
+          In given example i have imported the chart object which created in javascript.
+          other chart object can be created within python itself.
+          here i have created getdata which takes intraday data.
+          
+          getdata(exchange: str, token: int, starttime: str, endtime: str, interval=1)
+          
+          starttime and endtime is in "YYYY-MM-DD HH:MM:SS" format.
+          token is exchange scripcode.
+          
+          """
+        </py-repl>
+        <py-repl id="my-repl" auto-generate=true> 
+          #create candlestick series.
+          chart_series = chart.addCandlestickSeries()
+          
+          #create line series.
+          line_series1 = chart.addLineSeries({"color": 'rgba(35, 150, 77)',"lineWidth": 1,})
+          line_series2 = chart.addLineSeries({"color": 'rgba(5, 68, 203)',"lineWidth": 1,})
+          
+          def plot_dual_series(secCode1: int, secCode2: int, _from: str, _to: str, interval=1):
+              global data, data1
+              data = getdata("NFO", secCode1, _from, _to, interval)
+              data.rename(columns = {'close':'value'}, inplace = True)
+              data.drop(['open', 'high', 'low'], axis=1, inplace = True)
+              _data = con_tv_chart_data(data)
+              line_series1.setData(_data)
+              data1 = getdata("NFO", secCode2, _from, _to, interval)
+              data1.rename(columns = {'close':'value'}, inplace = True)
+              data1.drop(['open', 'high', 'low'], axis=1, inplace = True)
+              _data1 = con_tv_chart_data(data1)
+              line_series2.setData(_data1)
+              
+          def plot_candlestick_series(secCode1: int, _from: str, _to: str, interval=1):
+              global data, data1
+              data = getdata("NFO", secCode1, _from, _to, interval)
+              _data = con_tv_chart_data(data)
+              chart_series.setData(_data)
+              
+          plot_dual_series(71145, 71146, "2022-09-09 09:15:00", "2022-09-09 15:30:00",1)
+          plot_candlestick_series(71146, "2022-09-09 09:15:00", "2022-09-09 15:30:00",1)
+          
+          #to delete series use
+          #chart.removeSeries(chart_series)
+        </py-repl>
+        <py-repl id="my-repl" auto-generate=true> </py-repl>
+      </div>
+      <div class="_chart" id="l1" style="border: 1px solid rgb(82, 48, 114);width:70%; float: right; height: 100%; background-color: #fff;">
+      </div>
+    </div>
+    <script>
+        var chEle = document.getElementsByClassName("_chart")[0];
+        var sideEle = document.getElementById("l2");
+        const chHeight = parseInt(chEle.style.height);
+        const chWidth = parseInt(chEle.style.width);
+        
+        let conf = {
               rightPriceScale: {
-                visible: true,
-                borderColor: 'rgba(197, 203, 206, 1)',
-              },
-              leftPriceScale: {
                 visible: true,
                 borderColor: 'rgba(197, 203, 206, 1)',
               },
@@ -60,44 +113,65 @@
               },
               grid: {
                 horzLines: {
-                  color: '#F0F3FA',
+                  color: '#8f8f8f',
                 },
                 vertLines: {
-                  color: '#F0F3FA',
+                  color: '#8f8f8f',
                 },
               },
               crosshair: {
                 mode: LightweightCharts.CrosshairMode.Normal,
               },
               timeScale: {
+                timeVisible: true,
+                secondVisible: false,
                 borderColor: 'rgba(197, 203, 206, 1)',
               },
               handleScroll: {
                 vertTouchDrag: false,
               },
             }
-            var chart = LightweightCharts.createChart(document.getElementById("_e"), conf);
-	          var chart_series = chart.addCandlestickSeries({});
-        </script>
-        <script>
-          function clearOutput(event){
+        var chart = LightweightCharts.createChart(chEle, conf);
+        /*
+	      var chart_series = chart.addCandlestickSeries({});
+        var line_series1 = chart.addLineSeries({color: 'rgba(35, 150, 77)',lineWidth: 2,})
+        var line_series2 = chart.addLineSeries({color: 'rgba(5, 68, 203)',lineWidth: 2,})*/
+
+        function clearOutput(event){
             const ele = event.srcElement;
             if (ele.className.includes("output")){
               ele.innerHTML = '';
             }
           }
-		      addEventListener("dblclick", clearOutput);
-        </script>
+		    addEventListener("dblclick", clearOutput);
+    </script>
+    <py-script>
+      from pyodide import to_js
+      import pyodide, js
+      from js import Object, chart
+      from base64 import b16decode
+      import datetime
 
-        <py-script>
-          from pyodide import to_js
-          import pyodide, js
-          from js import Object, chart, chart_series
-          from base64 import b16decode
-          code = b'0A66726F6D206A7320696D706F727420584D4C48747470526571756573740A696D706F72742070616E6461732061732070640A66726F6D206461746574696D6520696D706F7274206461746574696D6520617320647464740A696D706F7274206A736F6E0A0A5F75726C203D202268747470733A2F2F616E742E616C696365626C75652E636F6D2F2F6170692F76312F6368617274732F746476220A0A6465662066726F6D5F746F5F74696D657374616D70732866726F6D5F646174652C20746F5F64617465293A200A2020202072657475726E2028696E7428647464742E7374727074696D652866726F6D5F646174652C202725592D256D2D25642025483A254D3A255327292E74696D657374616D702829292C0A202020202020202020202020696E7428647464742E7374727074696D6528746F5F646174652C202725592D256D2D25642025483A254D3A255327292E74696D657374616D70282929290A0A64656620676574646174612865786368616E67652C20746F6B656E2C20737461727474696D652C20656E6474696D652C20696E74657276616C3D31293A0A2020202075726C203D202268747470733A2F2F616E742E616C696365626C75656F6E6C696E652E636F6D2F6170692F76312F6368617274732F7464763F65786368616E67653D22202B207374722865786368616E676529202B202226746F6B656E3D222B2073747228746F6B656E29202B20222663616E646C65747970653D3126737461727474696D653D222B2073747228737461727474696D6529202B2226656E6474696D653D222B2073747228656E6474696D6529202B202226646174615F6475726174696F6E3D22202B2073747228696E74657276616C290A20202020726571203D20584D4C48747470526571756573742E6E657728290A202020207265712E6F70656E2822474554222C2075726C2C2046616C7365290A202020207265712E73656E6428290A20202020726573203D20737472287265712E726573706F6E7365290A20202020726573203D206A736F6E2E6C6F61647328726573290A202020206466203D2070642E446174614672616D65287265735B2264617461225D5B2263616E646C6573225D2C20636F6C756D6E733D5B2274696D65222C20226F70656E222C202268696768222C20226C6F77222C2022636C6F7365222C2022766F6C756D65225D290A2020202064656C2064665B22766F6C756D65225D0A2020202064665B2774696D65275D203D2070642E746F5F6461746574696D652864665B2774696D65275D2C20696E6665725F6461746574696D655F666F726D61743D54727565290A202020202364665B2774696D65275D203D202864662E74696D652E76696577286E702E696E74363429202F2F203130303030303030303029202B2031393830300A2020202072657475726E2064660A'
-          exec(b16decode(code).decode("utf-8"))
-          document.getElementsByClassName("cm-activeLine")[0].innerHTML = '"""\n#create live chart using tradingview lightweightCharts.\nthis wrapper uses the py-script to run the python codes from browser.\n\n\n#use get data to get data historical data of any timeframe.\n\ne.g. getdata(exchange="NFO", token=56272, starttime=1656647100, endtime=1662112800, interval=1)\nstarttime and endtime are timestamp. it returns pandas dataframe.\nwe getting two global from javascript chart and chart_series.\n\nto convert the list of dict to javascript use Object.fromEntries(to_js(python_dict))\ndata = Object.fromEntries(to_js({"a":1,"b":5}))\nset the data to series object..\nchart_series.setData(data)\n\nit will update the chart.\nyou can tweek the chart more ways if you want. read the tradingview lightweight charts document.\n"""'
-        </py-script>
-    </div>
+      def con_tv_chart_data(df):
+          data = df.to_dict("records")
+          return to_js(data, dict_converter=Object.fromEntries)
+
+      def plot_mtm(secCode1: int, secCode2: int, _from: str, _to: str, interval=1):
+          global data, data1
+          data = getdata("NFO", secCode1, _from, _to, interval)
+          data.rename(columns = {'close':'value'}, inplace = True)
+          data.drop(['open', 'high', 'low'], axis=1, inplace = True)
+          _data = con_tv_chart_data(data)
+          line_series1.setData(_data)
+          data1 = getdata("NFO", secCode2, _from, _to, interval)
+          data1.rename(columns = {'close':'value'}, inplace = True)
+          data1.drop(['open', 'high', 'low'], axis=1, inplace = True)
+          _data1 = con_tv_chart_data(data1)
+          line_series2.setData(_data1)
+
+
+      code = b'0A66726F6D206A7320696D706F727420584D4C48747470526571756573740A696D706F72742070616E6461732061732070640A66726F6D206461746574696D6520696D706F7274206461746574696D6520617320647464740A696D706F7274206A736F6E0A0A5F75726C203D202268747470733A2F2F616E742E616C696365626C75652E636F6D2F2F6170692F76312F6368617274732F746476220A0A6465662066726F6D5F746F5F74696D657374616D70732866726F6D5F646174652C20746F5F64617465293A200A2020202072657475726E2028696E7428647464742E7374727074696D652866726F6D5F646174652C202725592D256D2D25642025483A254D3A255327292E74696D657374616D702829292C0A202020202020202020202020696E7428647464742E7374727074696D6528746F5F646174652C202725592D256D2D25642025483A254D3A255327292E74696D657374616D70282929290A0A64656620676574646174612865786368616E67652C20746F6B656E2C20737461727474696D652C20656E6474696D652C20696E74657276616C3D31293A0A20202020737461727474696D652C20656E6474696D65203D2066726F6D5F746F5F74696D657374616D70732866726F6D5F646174653D737461727474696D652C20746F5F646174653D656E6474696D65290A2020202075726C203D202268747470733A2F2F616E742E616C696365626C75656F6E6C696E652E636F6D2F6170692F76312F6368617274732F7464763F65786368616E67653D22202B207374722865786368616E676529202B202226746F6B656E3D222B2073747228746F6B656E29202B20222663616E646C65747970653D3126737461727474696D653D222B2073747228737461727474696D6529202B2226656E6474696D653D222B2073747228656E6474696D6529202B202226646174615F6475726174696F6E3D22202B2073747228696E74657276616C290A20202020726571203D20584D4C48747470526571756573742E6E657728290A202020207265712E6F70656E2822474554222C2075726C2C2046616C7365290A202020207265712E73656E6428290A20202020726573203D20737472287265712E726573706F6E7365290A20202020726573203D206A736F6E2E6C6F61647328726573290A202020206466203D2070642E446174614672616D65287265735B2264617461225D5B2263616E646C6573225D2C20636F6C756D6E733D5B2274696D65222C20226F70656E222C202268696768222C20226C6F77222C2022636C6F7365222C2022766F6C756D65225D290A2020202064656C2064665B22766F6C756D65225D0A2020202064665B2774696D65275D203D2070642E746F5F6461746574696D652864665B2774696D65275D2C20696E6665725F6461746574696D655F666F726D61743D54727565290A2020202064665B2774696D65275D203D2064662E74696D652E64742E747A5F636F6E766572742827417369612F4B6F6C6B61746127290A2020202064665B2774696D65275D203D2064662E74696D652E6170706C79286C616D62646120783A20696E7428782E74696D657374616D70282929290A2020202072657475726E2064660A'
+      exec(b16decode(code).decode("utf-8"))
+    </py-script>
   </body>
 </html>
