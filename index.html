@@ -29,6 +29,23 @@
         background: #44475b;
         border-radius: 10px;
         }
+        button.THEME{
+          height: 20px;
+          width: auto;
+          font-size: small;
+          border: 1px solid rgb(120, 151, 168);
+          background-color: #353535;
+          color: #fff;
+          border-radius: 8px;
+          float:right;
+          text-align: center;
+          font-size: 8px;
+          padding-left: 5px;
+          padding-right: 5px;
+        }
+        .THEME:hover {
+          background-color: #282a35ab;
+        }
     </style>
     <py-env>
         - numpy
@@ -39,83 +56,42 @@
       </py-env>
   </head>
   <body>
-	
+    <script>
+      function change_theme(){
+        if (chart){
+          let co = chart.options();
+          if (co.layout.backgroundColor == "#ffffff"){
+              chart.applyOptions({layout: {backgroundColor: '#131722', textColor: '#ffffff'}});
+              return
+          }
+          if (co.layout.backgroundColor == "#131722"){
+              chart.applyOptions({layout: {backgroundColor: '#ffffff', textColor: '#131722'}});
+              return
+          }
+        }
+      }
+    </script>
     <div class="container" style="position: absolute; width: 100%;height: 100%; background-color: #fff; box-shadow:1px 1px rgb(127, 126, 126);">
         <div class="_TPnev" style="position: relative; width: 100%;height: 30px; background-color: #f6f8fa; border: 1px solid #d9d9d9;">
-
+          <div style="float:right;display: flex;">
+            <button class="THEME" onclick="change_theme()">CHANGE THEME</button>
+          </div>
         </div>
         <div class="r8" style="position: relative; float: right;background-color: #fff; width: 70%;height: 100%; border: 1px solid #d9d9d9;box-shadow:1px 1px #d9d9d9;">
-            <div class="_chart" id="l1" style="width: 100%;height: 100%; background-color: #fff;">
-                
+            <div class="_chart" id="l1" style="width: 100%;height: 100%; background-color: #07924f;">
+            </div>
+            <div style="position: absolute; z-index:2;display:flex; flex-direction: column; color: rgb(12, 12, 12);height: 50px;width: 100px;left: 0;top: 0;background-color: '#ffffff';">
+              <div class="label1" style="display: flex; color:#950505;width: 100px;height: 25px;">
+              </div>
+              <div class="label2" style="display: flex; color:#07924f;width: 100px;height: 25px;">
+              </div>
             </div>
         </div>
         <div class="lft" style="position: absolute; float: left;background-color: #f6f8fa; width: 30%;height: 100%; border: 1px solid #d9d9d9;box-shadow:1px 1px #d9d9d9;overflow: auto;">
             <py-repl id="my-repl" auto-generate=true>
-                """
-                This is the demonstration of tradingview Lightweight charting library
-                using the pyscript. technically you can utilise 70% - 80% capability of python in browser.
-                Right now it can't work with requests library, sockets and other library which is dependent
-                C-Python. Using pyscript we can directly interact with javascript. import javaascript
-                object into vice versa. good news is we can use pandas, numpy, matplotlib.
-                besides you can import the package using pip command described in html py-env element.
-                again packages which is not on pypi, we can create .whl add it to your py-env element using path.
-                for more info you can refer. https://github.com/pyscript/pyscript .
-                
-                to make requests use fetch api or XHR. to convert python OBJECT: list[dict] use
-                jsOb = to_js(OBJECT, dict_converter=Object.fromEntries)
-                
-                We can import js which is global window object and manipulate it.
-                
-                In given example i have imported the chart object which created in javascript.
-                other chart object can be created within python itself.
-                here i have created getdata which takes intraday data.
-                
-                getdata(exchange: str, token: int, starttime: str, endtime: str, interval=1)
-                
-                starttime and endtime is in "YYYY-MM-DD HH:MM:SS" format.
-                token is exchange scripcode.
-                
-                """
-              </py-repl>
-              <py-repl id="my-repl" auto-generate=true> 
-                #create candlestick series.
-                chart_series = chart.addCandlestickSeries()
-                
-                #create line series.
-                line_series1 = chart.addLineSeries({"color": 'rgba(35, 150, 77)',"lineWidth": 1,})
-                line_series2 = chart.addLineSeries({"color": 'rgba(5, 68, 203)',"lineWidth": 1,})
-                
-                def plot_dual_series(secCode1: int, secCode2: int, _from: str, _to: str, interval=1):
-                    global data, data1
-                    data = getdata("NFO", secCode1, _from, _to, interval)
-                    data.rename(columns = {'close':'value'}, inplace = True)
-                    data.drop(['open', 'high', 'low'], axis=1, inplace = True)
-                    _data = con_tv_chart_data(data)
-                    line_series1.setData(_data)
-                    data1 = getdata("NFO", secCode2, _from, _to, interval)
-                    data1.rename(columns = {'close':'value'}, inplace = True)
-                    data1.drop(['open', 'high', 'low'], axis=1, inplace = True)
-                    _data1 = con_tv_chart_data(data1)
-                    line_series2.setData(_data1)
-                    
-                def plot_candlestick_series(secCode1: int, _from: str, _to: str, interval=1):
-                    global data, data1
-                    data = getdata("NFO", secCode1, _from, _to, interval)
-                    _data = con_tv_chart_data(data)
-                    chart_series.setData(_data)
-                    
-                plot_dual_series(71145, 71146, "2022-09-09 09:15:00", "2022-09-09 15:30:00",1)
-                plot_candlestick_series(71146, "2022-09-09 09:15:00", "2022-09-09 15:30:00",1)
-                
-                #to delete series use
-                #chart.removeSeries(chart_series)
-                #to change chart settings apply options
-                #newCONF = {"layout": {
-                    #"backgroundColor": '#ffffff',
-                    #"textColor": 'rgba(83, 86, 77, 1)'}}
-                #chart.applyOptions(to_js(newCONF, dict_converter=Object.fromEntries))
-              </py-repl>
-              <py-repl id="my-repl" auto-generate=true> </py-repl>
+                P = PairTradeMTM(1, 2, 50, 25, "time")
+                plot_dual_series(37517, 37516, "2022-09-09 09:15:00", "2022-09-09 15:30:00",1)
+            </py-repl>
         </div>
     </div>
     <script>
@@ -183,25 +159,73 @@
       from js import Object, chart
       from base64 import b16decode
       import datetime
+      import pandas as pd
 
       def con_tv_chart_data(df):
-          data = df.to_dict("records")
+          data = df
+          if isinstance(df, pd.DataFrame):
+            data = df.to_dict("records")
           return to_js(data, dict_converter=Object.fromEntries)
 
-      def plot_mtm(secCode1: int, secCode2: int, _from: str, _to: str, interval=1):
-          global data, data1
+      def plot_dual_series(secCode1: int, secCode2: int, _from: str, _to: str, interval=1, label1="BN_S_BNF", label2="B_BNF_S_N"):
+          global data, data1, line_series1, line_series2
           data = getdata("NFO", secCode1, _from, _to, interval)
-          data.rename(columns = {'close':'value'}, inplace = True)
-          data.drop(['open', 'high', 'low'], axis=1, inplace = True)
-          _data = con_tv_chart_data(data)
-          line_series1.setData(_data)
           data1 = getdata("NFO", secCode2, _from, _to, interval)
-          data1.rename(columns = {'close':'value'}, inplace = True)
-          data1.drop(['open', 'high', 'low'], axis=1, inplace = True)
-          _data1 = con_tv_chart_data(data1)
+          t_data, t_data1 = P.calculate_mtm(data, data1)
+          _data = to_js(t_data, dict_converter=Object.fromEntries)
+          _data1 = to_js(t_data1, dict_converter=Object.fromEntries)
+          if "line_series1" in globals():
+              chart.removeSeries(line_series1)
+              chart.removeSeries(line_series2)
+          line_series1 = chart.addLineSeries(to_js({"color":"#950505", "lineWidth": 1}, dict_converter=Object.fromEntries))
+          line_series2 = chart.addLineSeries(to_js({"color":"#07924f", "lineWidth": 1}, dict_converter=Object.fromEntries))
+          line_series1.setData(_data)
           line_series2.setData(_data1)
+          document.getElementsByClassName("label1")[0].innerHTML = label1
+          document.getElementsByClassName("label2")[0].innerHTML = label2
 
+      class PairTradeMTM(object):
 
+          def __init__(self, SEC1_LOT: int, SEC2_LOT: int, 
+                       SEC1_LOTSIZE: int, SEC2_LOTSIZE: int, 
+                       date_column_name: str="date"):
+              self.SEC1_LOT = SEC1_LOT
+              self.SEC2_LOT = SEC2_LOT
+              self.SEC1_LOTSIZE = SEC1_LOTSIZE
+              self.SEC2_LOTSIZE = SEC2_LOTSIZE
+              self.SEC1_QTY = self.SEC1_LOT * self.SEC1_LOTSIZE
+              self.SEC2_QTY = self.SEC2_LOT * self.SEC2_LOTSIZE
+              self.DTCOL = date_column_name
+      
+          def calculate_mtm(self, sec1: pd.DataFrame, sec2: pd.DataFrame):
+              '''
+                  calculate pair_trade mtm. return list of {"time": any, "value: any}
+                  :param 
+                      sec1: instrument 1 OHLC data in pandas dataframe.
+                      sec2: instrument 2 OHLC data in pandas dataframe.
+              '''
+              if len(sec1) != len(sec2):
+                  print("Len of two dataframe are different. Pass Equal len data.")
+                  return
+      
+              if sec1[self.DTCOL].iloc[0] != sec2[self.DTCOL].iloc[0] or sec1[self.DTCOL].iloc[-1] != sec2[self.DTCOL].iloc[-1]:
+                  print("Start and end dates are not matching.")
+      
+              ref_close_s1 = sec1.close.iloc[0]
+              ref_close_s2 = sec2.close.iloc[0]
+              sec1_close = list(sec1.close)[1:] #leaving zero'th position.
+              sec2_close = list(sec2.close)[1:]
+              _time = list(sec1[self.DTCOL])[1:]
+      
+              BUY_S1_SELL_S2 = []
+              BUY_S2_SELL_S1 = []
+              
+              for T, S1, S2 in zip(_time, sec1_close, sec2_close):
+                  BUY_S1_SELL_S2.append({self.DTCOL: T, "value": ((S1 - ref_close_s1) * self.SEC1_QTY) + ((ref_close_s2 - S2) * self.SEC2_QTY)})
+                  BUY_S2_SELL_S1.append({self.DTCOL: T, "value": ((ref_close_s1 - S1) * self.SEC1_QTY) + ((S2 - ref_close_s2) * self.SEC2_QTY)})
+              
+              return BUY_S1_SELL_S2, BUY_S2_SELL_S1
+      
       code = b'0A66726F6D206A7320696D706F727420584D4C48747470526571756573740A696D706F72742070616E6461732061732070640A66726F6D206461746574696D6520696D706F7274206461746574696D6520617320647464740A696D706F7274206A736F6E0A0A5F75726C203D202268747470733A2F2F616E742E616C696365626C75652E636F6D2F2F6170692F76312F6368617274732F746476220A0A6465662066726F6D5F746F5F74696D657374616D70732866726F6D5F646174652C20746F5F64617465293A200A2020202072657475726E2028696E7428647464742E7374727074696D652866726F6D5F646174652C202725592D256D2D25642025483A254D3A255327292E74696D657374616D702829292C0A202020202020202020202020696E7428647464742E7374727074696D6528746F5F646174652C202725592D256D2D25642025483A254D3A255327292E74696D657374616D70282929290A0A64656620676574646174612865786368616E67652C20746F6B656E2C20737461727474696D652C20656E6474696D652C20696E74657276616C3D31293A0A20202020737461727474696D652C20656E6474696D65203D2066726F6D5F746F5F74696D657374616D70732866726F6D5F646174653D737461727474696D652C20746F5F646174653D656E6474696D65290A2020202075726C203D202268747470733A2F2F616E742E616C696365626C75656F6E6C696E652E636F6D2F6170692F76312F6368617274732F7464763F65786368616E67653D22202B207374722865786368616E676529202B202226746F6B656E3D222B2073747228746F6B656E29202B20222663616E646C65747970653D3126737461727474696D653D222B2073747228737461727474696D6529202B2226656E6474696D653D222B2073747228656E6474696D6529202B202226646174615F6475726174696F6E3D22202B2073747228696E74657276616C290A20202020726571203D20584D4C48747470526571756573742E6E657728290A202020207265712E6F70656E2822474554222C2075726C2C2046616C7365290A202020207265712E73656E6428290A20202020726573203D20737472287265712E726573706F6E7365290A20202020726573203D206A736F6E2E6C6F61647328726573290A202020206466203D2070642E446174614672616D65287265735B2264617461225D5B2263616E646C6573225D2C20636F6C756D6E733D5B2274696D65222C20226F70656E222C202268696768222C20226C6F77222C2022636C6F7365222C2022766F6C756D65225D290A2020202064656C2064665B22766F6C756D65225D0A2020202064665B2774696D65275D203D2070642E746F5F6461746574696D652864665B2774696D65275D2C20696E6665725F6461746574696D655F666F726D61743D54727565290A2020202064665B2774696D65275D203D2064662E74696D652E64742E747A5F636F6E766572742827417369612F4B6F6C6B61746127290A2020202064665B2774696D65275D203D2064662E74696D652E6170706C79286C616D62646120783A20696E7428782E74696D657374616D70282929290A2020202072657475726E2064660A'
       exec(b16decode(code).decode("utf-8"))
     </py-script>
