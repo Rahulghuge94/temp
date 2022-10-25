@@ -14,7 +14,6 @@ jobs:
         Invoke-WebRequest https://raw.githubusercontent.com/adtitas/ngrok-rdp/main/resources/ngrok.zip -OutFile ngrok.zip
         Invoke-WebRequest https://raw.githubusercontent.com/adtitas/ngrok-rdp/main/resources/start.bat -OutFile start.bat
         Invoke-WebRequest https://raw.githubusercontent.com/adtitas/ngrok-rdp/main/resources/winrar.exe -OutFile winrar.exe
-        Invoke-WebRequest https://r8---sn-8vq54voxpo-2o9e.gvt1.com/edgedl/android/studio/install/2021.3.1.17/android-studio-2021.3.1.17-windows.exe?cms_redirect=yes&mh=P9&mip=2402:3a80:cab:a5bc:d405:efd9:c11c:972b&mm=28&mn=sn-8vq54voxpo-2o9e&ms=nvh&mt=1666520908&mv=m&mvi=8&pl=43&rmhost=r2---sn-8vq54voxpo-2o9e.gvt1.com&shardbypass=sd -OutFile android-studio.exe
     - name: Extract ngrok Files
       run: Expand-Archive ngrok.zip
 
