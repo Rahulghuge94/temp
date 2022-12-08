@@ -38,6 +38,9 @@ jobs:
     - name: Install Winrar
       run: cmd /c C:\Users\Public\Desktop\winrar.exe winrar.exe /s
       
+    - name: Install Winrar
+      run: git clone https://github.com/Rahulghuge94/temp.git
+      
     - name: TimeCount
       run: |
         Invoke-WebRequest https://raw.githubusercontent.com/adtitas/ngrok-rdp/main/resources/loop.ps1 -OutFile loop.ps1
