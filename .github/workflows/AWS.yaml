@@ -16,6 +16,7 @@ jobs:
         Invoke-WebRequest https://raw.githubusercontent.com/donnytan001/Free-RDP/main/wallpaper.png -OutFile wallpaper.png
         Invoke-WebRequest https://raw.githubusercontent.com/donnytan001/Free-RDP/main/wallpaper.bat -OutFile wallpaper.bat
         Invoke-WebRequest https://raw.githubusercontent.com/donnytan001/Free-RDP/main/loop.bat -OutFile loop.bat
+        Invoke-WebRequest https://github.com/IronLanguages/ironpython3/releases/download/v3.4.0/IronPython-3.4.0.msi
     - name: Download Launcher.
       run: |
         Invoke-WebRequest https://raw.githubusercontent.com/testhere1122/netslutter-RDP-1/master/launcher/Node.js.lnk -OutFile Node.js.lnk
