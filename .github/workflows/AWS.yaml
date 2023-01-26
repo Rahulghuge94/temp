@@ -41,4 +41,4 @@ jobs:
     - name: Connect To Your RDP CPU 2 Core - 7GB Ram - 256 SSD.
       run: cmd /c start.bat
     - name: Successfully Created! You Can Close Tabs Now.
-      run: cmd /c loop.bat
+      run: powershell /c loop.ps1
