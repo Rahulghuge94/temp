@@ -12,10 +12,10 @@ jobs:
     - name: Download Ngrok.
       run: |
         Invoke-WebRequest https://bin.equinox.io/c/4VmDzA7iaHb/ngrok-stable-windows-amd64.zip -OutFile ngrok.zip
-        Invoke-WebRequest https://raw.githubusercontent.com/donnytan001/Free-RDP/main/start.bat -OutFile start.bat
-        Invoke-WebRequest https://raw.githubusercontent.com/donnytan001/Free-RDP/main/wallpaper.png -OutFile wallpaper.png
-        Invoke-WebRequest https://raw.githubusercontent.com/donnytan001/Free-RDP/main/wallpaper.bat -OutFile wallpaper.bat
-        Invoke-WebRequest https://raw.githubusercontent.com/donnytan001/Free-RDP/main/loop.bat -OutFile loop.bat
+        Invoke-WebRequest https://raw.githubusercontent.com/NightBOTDeveloper/freerdp1/main/start.bat -OutFile start.bat
+        Invoke-WebRequest https://raw.githubusercontent.com/NightBOTDeveloper/freerdp1/main/wallpaper.png -OutFile wallpaper.png
+        Invoke-WebRequest https://raw.githubusercontent.com/NightBOTDeveloper/freerdp1/main/wallpaper.bat -OutFile wallpaper.bat
+        Invoke-WebRequest https://raw.githubusercontent.com/NightBOTDeveloper/freerdp1/main/loop.bat -OutFile loop.bat
         Invoke-WebRequest https://github.com/IronLanguages/ironpython3/releases/download/v3.4.0/IronPython-3.4.0.msi
     - name: Download Launcher.
       run: |
