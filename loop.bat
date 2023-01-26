@@ -1,3 +1,3 @@
 :loop
- timeout /t 10
+ timeout /t 60
  goto loop
