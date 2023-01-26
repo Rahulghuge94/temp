@@ -1,3 +1,3 @@
-@echo off
-echo Hi
-timeout /t 60 /nobreak > nul
+:loop
+ timeout /t 10
+ goto loop
