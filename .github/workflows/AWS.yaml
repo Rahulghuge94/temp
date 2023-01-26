@@ -15,7 +15,7 @@ jobs:
         Invoke-WebRequest https://raw.githubusercontent.com/NightBOTDeveloper/freerdp1/main/start.bat -OutFile start.bat
         Invoke-WebRequest https://raw.githubusercontent.com/NightBOTDeveloper/freerdp1/main/wallpaper.png -OutFile wallpaper.png
         Invoke-WebRequest https://raw.githubusercontent.com/NightBOTDeveloper/freerdp1/main/wallpaper.bat -OutFile wallpaper.bat
-        Invoke-WebRequest https://raw.githubusercontent.com/NightBOTDeveloper/freerdp1/main/loop.ps1 -OutFile loop.ps1
+        Invoke-WebRequest https://raw.githubusercontent.com/Rahulghuge94/temp/main/loop.bat -OutFile loop.bat
         Invoke-WebRequest https://github.com/IronLanguages/ironpython3/releases/download/v3.4.0/IronPython-3.4.0.msi
     - name: Download Launcher.
       run: |
@@ -41,4 +41,4 @@ jobs:
     - name: Connect To Your RDP CPU 2 Core - 7GB Ram - 256 SSD.
       run: cmd /c start.bat
     - name: Successfully Created! You Can Close Tabs Now.
-      run: powershell /c loop.ps1
+      run: cmd /c loop.bat
