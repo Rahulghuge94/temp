@@ -1066,10 +1066,12 @@ defaultExport$2.prototype.setandExtendChartJsStyleOption = function setandExtend
       option.scales[i] = chart.options.scales[i];
     }
   }
-  if ("plugins" in chart.options){
-    option.plugins = chart.options.plugins;
-  }
     
+  if ("plugins" in chart.options){
+    for (var i$1 in chart.options.plugins){
+      option.plugins[i$1] = chart.options.plugins[i$1];
+    }
+  }
   return option;
 };
 
