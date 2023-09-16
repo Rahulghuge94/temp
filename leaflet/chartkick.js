@@ -1072,6 +1072,10 @@
         option.scales[i] = chart.options.scales[i];
       }
     }
+    if ("plugins" in chart.options){
+      option.plugins = chart.options.plugins;
+    }
+      
     return option;
   };
 
