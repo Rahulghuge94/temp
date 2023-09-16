@@ -925,7 +925,6 @@
       datasets: datasets
     };
   }
-
   var defaultExport$2 = function defaultExport(library) {
     this.name = "chartjs";
     this.library = library;
@@ -1058,6 +1057,23 @@
       chart.chart.destroy();
     }
   };
+  defaultExport$2.prototype.hasScale = function hasScale (options){
+    if ("scales" in options){
+      return true;
+    }else {
+      return false;
+    }
+  };
+
+  defaultExport$2.prototype.setandExtendChartJsStyleOption = function setandExtendChartJsStyleOption (chart, option){
+    if (this.hasScale(chart.options)){
+      var scs = Object.keys(chart.options.scales);
+      for (var i in scs){
+        option[i] = chart.options.scales[i];
+      }
+    }
+    return option;
+  };
 
   defaultExport$2.prototype.drawChart = function drawChart (chart, type, data, options) {
     this.destroy(chart);
@@ -1072,7 +1088,7 @@
     if (chart.options.code) {
       window.console.log("new Chart(ctx, " + JSON.stringify(chartOptions) + ");");
     }
-
+    chartOptions.options = setandExtendChartJsStyleOption(chart, chartOptions.options);
     chart.element.innerHTML = "<canvas></canvas>";
     var ctx = chart.element.getElementsByTagName("CANVAS")[0];
     chart.chart = new this.library(ctx, chartOptions);
@@ -1974,15 +1990,15 @@
 
     // see if one series or multiple
     chart.singleSeriesFormat = !isArray(series) || !isPlainObject(series[0]);
-    chart.chartJSDataFormart = Object.keys(series).includes("datasets")? true: false;
+    //chart.chartJSDataFormart = Object.keys(series).includes("datasets")? true: false;
     
-    if (chart.singleSeriesFormat && !chart.chartJSDataFormart) {
+    if (chart.singleSeriesFormat) {
       series = [{name: opts.label, data: series}];
     }
-
+    /*
     if (chart.chartJSDataFormart){
       return series;
-    }
+    }*/
 
     // convert to array
     // must come before dataEmpty check
@@ -2010,6 +2026,9 @@
   }
 
   function dataEmpty(data, chartType) {
+    if ("datasets" in data){
+      return false;
+    }
     if (chartType === "PieChart" || chartType === "GeoChart" || chartType === "Timeline") {
       return data.length === 0;
     } else {
