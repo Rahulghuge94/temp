@@ -1082,7 +1082,7 @@ defaultExport$2.prototype.drawChart = function drawChart (chart, type, data, opt
   if (chart.options.code) {
     window.console.log("new Chart(ctx, " + JSON.stringify(chartOptions) + ");");
   }
-  chartOptions.options = setandExtendChartJsStyleOption(chart, chartOptions.options);
+  chartOptions.options = this.setandExtendChartJsStyleOption(chart, chartOptions.options);
   chart.element.innerHTML = "<canvas></canvas>";
   var ctx = chart.element.getElementsByTagName("CANVAS")[0];
   chart.chart = new this.library(ctx, chartOptions);
