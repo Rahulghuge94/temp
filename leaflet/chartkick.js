@@ -1067,9 +1067,9 @@
 
   defaultExport$2.prototype.setandExtendChartJsStyleOption = function setandExtendChartJsStyleOption (chart, option){
     if (this.hasScale(chart.options)){
-      var scs = Object.keys(chart.options.scales);
-      for (var i in scs){
-        option[i] = chart.options.scales[i];
+      Object.keys(chart.options.scales);
+      for (var i in chart.options.scales){
+        option.scales[i] = chart.options.scales[i];
       }
     }
     return option;
