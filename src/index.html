@@ -8,7 +8,7 @@
 <body>
     <script>
         async function getData() {
-            const req = await fetch("https://stagingapi.pythontrader.in/hdata?tradingsymbol=NIFTY24AUGFUT");
+            const req = await fetch("https://cors-anywhere.herokuapp.com/corsdemo/https://stagingapi.pythontrader.in/hdata?tradingsymbol=NIFTY24AUGFUT");
             let data = await req.json();
             return data;
         }
